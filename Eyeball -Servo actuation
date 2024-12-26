@@ -1,0 +1,33 @@
+#include <Servo.h>
+
+// initialization
+Servo horizontalServo;
+Servo verticalServo;
+Servo horizontalServoOpposite;
+Servo verticalServoOpposite;
+
+void setup() {
+  horizontalServo.attach(9);      
+  verticalServo.attach(10);      
+  horizontalServoOpposite.attach(11);  
+  verticalServoOpposite.attach(12);   
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    int x = Serial.parseInt();  
+    int y = Serial.parseInt();  
+
+   
+    int horizontalAngle = map(x, 0, 640, 0, 180);  
+    int verticalAngle = map(y, 0, 480, 0, 180);    
+
+    horizontalServo.write(horizontalAngle);
+    verticalServo.write(verticalAngle);
+
+    
+    horizontalServoOpposite.write(180 - horizontalAngle);  
+    verticalServoOpposite.write(180 - verticalAngle);      
+  }
+}
